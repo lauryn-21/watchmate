@@ -26,3 +26,10 @@ def movie_detail(request,pk):
       movie=Movie.Object.get(pk=pk)
       serializer=MovieSerializer(movie)
       return Response (serializer.data)
+   if request.method == 'PUT':
+      movie=Movie.objects.get(pk=pk)
+      serializer=MovieSerializer(movie,request.data)
+      if serializer.is_valid():
+         serializer.save()
+      else:
+         return Response(serializer.errors)
